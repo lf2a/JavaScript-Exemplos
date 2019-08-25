@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link crypt="sha" rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <div testeCampo="ola" id="app"></div>
+
+  <button>ok</button>
+
+  <script src="teste.js"></script>
+  <script>
+    const app = document.querySelector('div')
+
+    app.textContent = app.textContent = "teste"
+
+    console.log(app.attributes[1].textContent)
+    console.log(app)
+    console.log(document.getElementsByTagName('div')[0].getAttribute("testeCampo"))
+
+    const div = document.createElement('h1')
+    div.textContent = "H1 teste"
+    document.querySelector('body').appendChild(div)
+
+    document.querySelector('button').addEventListener('click', e => {
+      e.target.textContent = "clicado"
+      document.getElementById('app').innerHTML = "clicado"
+      console.log(e)
+
+      t()
+      console.log(E.name)
+    })
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://jsonplaceholder.typicode.com/posts/1');
+    xhr.responseType = 'json';
+    xhr.onload = function (e) {
+      if (this.status == 200) {
+        console.log('response', this.response);
+      }
+    };
+    xhr.send();
+  </script>
+</body>
+
+</html>

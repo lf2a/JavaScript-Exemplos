@@ -1,0 +1,26 @@
+# mostrar todos os usuarios
+
+query {
+  users{
+    id
+    name
+    email
+  }
+}
+
+# criar usuario e retornar o id
+
+mutation {
+  createUser(name: "Luiz Filipy", email: "luizfilipy014@gmail.com") {
+    id
+  }
+}
+
+# retornar o nome e email de um usuario especifico
+
+query {
+  user(id: "insira o id aqui"){
+    name
+    email
+  }
+}

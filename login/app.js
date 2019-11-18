@@ -4,6 +4,7 @@ var jwt = require('jsonwebtoken');
 
 const app = express();
 
+// secret key
 const secret = "secrett";
 
 function verifyJWT(req, res, next) {

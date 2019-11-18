@@ -6,3 +6,6 @@
 
 ### outros
 - calculadora
+
+### login
+> testando autenticação via JWT (Json Web Token) no express

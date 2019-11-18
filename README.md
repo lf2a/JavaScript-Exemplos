@@ -9,3 +9,6 @@
 
 ### login
 > testando autenticação via JWT (Json Web Token) no express
+
+### TypeScript-code
+> meus exemplos em typescript, apenas codigos simples para estudo

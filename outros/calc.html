@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Calc</title>
+
+  <style>
+    * {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #root {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    #lightButton,
+    #darkButton {
+      border: 0;
+      width: 144px;
+      padding: 10px;
+      margin: 20px 0 0 0;
+      border-radius: 4px;
+      box-shadow: 0 0 2px 0 gray;
+    }
+
+    #lightButton {
+      background: #f7f7f7;
+    }
+
+    #darkButton {
+      color: #fff;
+      background: #202040;
+    }
+  </style>
+
+  <style id="light">
+    #calc {
+      width: 300px;
+      margin: 20px 0;
+      border-radius: 4px;
+      background: #f7f7f7;
+      box-shadow: 0 0 2px 0 gray;
+    }
+
+    #header {
+      padding: 4px;
+    }
+
+    #header,
+    #action-buttons {
+      display: flex;
+    }
+
+    #red,
+    #green,
+    #yellow {
+      width: 15px;
+      height: 15px;
+      margin: 0 3px;
+      border-radius: 50%;
+      box-shadow: 0 0 1px 0 rgb(190, 190, 190);
+    }
+
+    #red {
+      background: red;
+    }
+
+    #green {
+      background: rgb(4, 209, 4);
+    }
+
+    #yellow {
+      background: rgb(243, 199, 0);
+    }
+
+    #title {
+      width: 100%;
+      text-align: center;
+    }
+
+    #visor {
+      padding: 4px;
+    }
+
+    #numbers {
+      border: 0;
+      width: 96%;
+      resize: none;
+      height: 90px;
+      padding: 6px;
+      font-size: 2.5em;
+      text-align: right;
+      background: #fff;
+      border-radius: 2px;
+      box-shadow: 0 0 0.5px 0 gray;
+    }
+
+    #info {
+      border: 0;
+      width: 100%;
+      color: #fff;
+      padding: 8px 0;
+      font-weight: bold;
+      margin: 6px 0 0 0;
+      text-align: center;
+      border-radius: 4px;
+      background: rgb(255, 123, 0);
+    }
+
+    #buttons {
+      width: 100%;
+    }
+
+    #buttons button {
+      width: 100%;
+      height: 60px;
+      cursor: pointer;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    #buttons button:hover {
+      border: 0;
+      color: #fff;
+      border-radius: 4px;
+      background: rgb(34, 80, 204);
+    }
+  </style>
+
+  <style id="dark">
+    #calc {
+      width: 300px;
+      margin: 20px 0;
+      border-radius: 4px;
+      background: #202040;
+      box-shadow: 0 0 2px 0 gray;
+    }
+
+    #header {
+      padding: 4px;
+      color: #fff;
+    }
+
+    #header,
+    #action-buttons {
+      display: flex;
+    }
+
+    #red,
+    #green,
+    #yellow {
+      width: 15px;
+      height: 15px;
+      margin: 0 3px;
+      border-radius: 50%;
+      box-shadow: 0 0 1px 0 rgb(190, 190, 190);
+    }
+
+    #red {
+      background: red;
+    }
+
+    #green {
+      background: rgb(4, 209, 4);
+    }
+
+    #yellow {
+      background: rgb(243, 199, 0);
+    }
+
+    #title {
+      width: 100%;
+      text-align: center;
+    }
+
+    #visor {
+      padding: 4px;
+    }
+
+    #numbers {
+      border: 0;
+      width: 96%;
+      resize: none;
+      height: 90px;
+      padding: 6px;
+      color: #fff;
+      font-size: 2.5em;
+      text-align: right;
+      border-radius: 2px;
+      background: #202060;
+      box-shadow: 0 0 0.5px 0 gray;
+    }
+
+    #info {
+      border: 0;
+      width: 100%;
+      color: #fff;
+      padding: 8px 0;
+      font-weight: bold;
+      margin: 6px 0 0 0;
+      text-align: center;
+      border-radius: 4px;
+      background: #ff6464;
+    }
+
+    #buttons {
+      width: 100%;
+    }
+
+    #buttons button {
+      border: 0;
+      width: 100%;
+      height: 60px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 18px;
+      text-align: center;
+      border-radius: 4px;
+      background: #202060;
+    }
+
+    #buttons button:hover {
+      border: 0;
+      color: #fff;
+      border-radius: 4px;
+      background: #2c2c83;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root">
+    <!-- mudar de tema -->
+    <div id="toogle-mode">
+      <!-- event.target.id => retorna o id do elemento -->
+      <button onclick="changeMode(event.target.id)" id="lightButton">Light</button>
+      <button onclick="changeMode(event.target.id)" id="darkButton">Dark</button>
+    </div>
+
+    <!-- calculadora -->
+    <div id="calc">
+      <!-- barra de titulo -->
+      <div id="header">
+        <div id="action-buttons">
+          <div id="red"></div>
+          <div id="green"></div>
+          <div id="yellow"></div>
+        </div>
+        <div id="title">Calc v1.0</div>
+      </div>
+
+      <!-- visor dos numeros -->
+      <div id="visor">
+        <textarea type="text" id="numbers" value="0" readonly></textarea>
+        <button id="info" onclick="updateVisor('null')" style="display: none;">Verifique a formula</button>
+      </div>
+
+      <!-- botões -->
+      <table id="buttons">
+        <tbody>
+          <tr>
+            <td><button onclick="armazenarValor('(')">(</button></td>
+            <td><button onclick="armazenarValor(')')">)</button></td>
+            <td><button onclick="limparUltimo()">&LeftArrow;</button></td>
+            <td><button onclick="armazenarValor(String(Math.PI))">&#x03C0;</button></td>
+          </tr>
+          <tr>
+            <td><button onclick="setOperacao('**')">^</button></td>
+            <td><button onclick="limpar()">C</button></td>
+            <td><button onclick="getResultado('srqt')">&Sqrt;</button></td>
+            <td><button onclick="setOperacao('+')">&plus;</button></td>
+          </tr>
+          <tr>
+            <td><button onclick="armazenarValor('7')">7</button></td>
+            <td><button onclick="armazenarValor('8')">8</button></td>
+            <td><button onclick="armazenarValor('9')">9</button></td>
+            <td><button onclick="setOperacao('-')">&minus;</button></td>
+          </tr>
+          <tr>
+            <td><button onclick="armazenarValor('4')">4</button></td>
+            <td><button onclick="armazenarValor('5')">5</button></td>
+            <td><button onclick="armazenarValor('6')">6</button></td>
+            <td><button onclick="setOperacao('*')">&times;</button></td>
+          </tr>
+          <tr>
+            <td><button onclick="armazenarValor('1')">1</button></td>
+            <td><button onclick="armazenarValor('2')">2</button></td>
+            <td><button onclick="armazenarValor('3')">3</button></td>
+            <td><button onclick="setOperacao('/')">&divide;</button></td>
+          </tr>
+          <tr>
+            <td><button onclick="armazenarValor(',')">&comma;</button></td>
+            <td><button onclick="armazenarValor('0')">0</button></td>
+            <td colspan="2"><button id="equal" onclick="getResultado()">&equals;</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+  <script>
+    'use strict';
+    // a formula ficaŕa contida na variavel `valor`
+    let valor = new String('');
+
+    // quantidade de parenteses abertos
+    let countCloseP = 0;
+
+    // quantidade de parenteses abertos
+    let countOpenP = 0;
+
+
+    /**
+     * Recebe o numero no formato de char (string) e armazena em uma
+     *     variavel. fazendo a verificação em qual variável será armazenada.
+     *
+     * @param {string} numero Recebe o número que irá ser armazenado.
+     */
+    function armazenarValor(numero) {
+      if (numero === ',') {
+        // só será adicionda uma virgula caso seja após um número ser inserido.
+        // verifica se o ultimo valor é um número, se não é um número então é uma operação.
+        if (parseFloat(valor[valor.length - 1]) <= 9) {
+
+
+          /*
+          Erro: como toda a expressão fica em uma unica string, a expressão abaixo irá permitir apenas uma vez
+            por 'virgula' no valor como todos os valor ficam na mesma string não posso por virgulas em outros numeros.
+          */
+          // valor += valor.includes('.') ? '' : '.';
+
+          // corrigindo o erro por ora...
+          valor += '.';
+        }
+
+        if (valor.length === 0)
+          valor = '0';
+      } else {
+        // conta a quantidade de parenteses abertos e fechados
+        if (numero === '(') {
+          countOpenP++;
+        } else if (numero === ')') {
+          countCloseP++;
+        }
+        valor += numero;
+      }
+
+      updateVisor(valor);
+    }
+
+    /**
+     * Recebe o tipo de operação que deveŕa ser efetuada.
+     *
+     * @param {string} operacao Recebe o tipo de operacao que irá ser realizada.
+     */
+    function setOperacao(operacao) {
+      let temp = '';
+      if (valor[valor.length - 1] !== operacao) {
+
+        // caso não haja nenhum valor será impresso apenas valor negativo (assinado).
+        if (valor.length === 0) {
+          switch (operacao) {
+            case '-':
+              valor += operacao;
+              temp = valor;
+              break;
+            case '**':
+            case '/':
+            case '+':
+            case '*':
+            default:
+              temp = '0';
+              break;
+          }
+        } else {
+          // só será adicionda uma operação caso seja após um número ser inserido.
+          if (parseFloat(valor[valor.length - 1]) <= 9 || valor[valor.length - 1] === ')' || valor[valor.length - 1] ===
+            '(') {
+            valor += operacao;
+            temp = valor;
+          }
+        }
+      }
+
+      updateVisor(temp);
+    }
+
+    /**
+     * Realiza o calculo e renderiza o resultado no visor (input:text => id="numbers").
+     *
+     */
+    function getResultado(opcional) {
+      if (countOpenP === countCloseP) {
+        if (opcional === 'srqt') {
+          // se for requerido raiz quadrada
+          if (valor.length !== 0) {
+            const resultado = Math.sqrt(parseFloat(eval(valor)));
+            updateVisor(String(resultado));
+            valor = String(resultado);
+          }
+        } else {
+          if (valor.length !== 0) {
+            const resultado = eval(valor);
+            updateVisor(resultado);
+            // atribui o resultado  valor para continuar a efetuar operações
+            valor = String(resultado);
+          } else {
+            updateVisor('0');
+          }
+        }
+      } else {
+        updateVisor(valor, true);
+      }
+    }
+
+    /**
+     * @param {string} valor Recebe a string que deverá ser posta com valor do input.
+     */
+    function updateVisor(__valor, error = false) {
+      const box = document.getElementById('numbers');
+      const infoButton = document.getElementById('info');
+
+      // se a quantidade de parentes estiver errada, entao, será mostrar um box dizendo que deu erro.
+      if (error) {
+        box.style.cssText = "box-shadow: 0 0 2px 0 #ff6464;";
+        infoButton.style.cssText = "display: block;";
+      }
+
+      if (__valor === 'null') {
+        infoButton.style.cssText = "display: none;";
+        box.style.cssText = "box-shadow: 0;";
+        box.value = valor;
+      } else {
+        box.value = __valor;
+      }
+    }
+
+    /**
+     * limpa a variavel e o visor.
+     *
+     */
+    function limpar() {
+      valor = '';
+      updateVisor('0');
+    }
+
+    function limparUltimo() {
+      // remove o último elemento
+      let novoValor = valor.slice(0, valor.length - 1);
+
+      if (novoValor.length === 0) {
+        updateVisor('0');
+        valor = '';
+      } else {
+        valor = novoValor;
+        updateVisor(valor);
+      }
+    }
+
+    // limpar o visor sempre que ocorrer o refresh.
+    updateVisor('0');
+
+    // por padrao o tema 'light' é usado
+    document.getElementById('light').disabled = false;
+    document.getElementById('dark').disabled = true;
+
+    function changeMode(e) {
+      const lightStyle = document.getElementById('light');
+      const darkStyle = document.getElementById('dark');
+
+      if (e === 'lightButton') {
+        lightStyle.disabled = false;
+        darkStyle.disabled = true;
+      }
+      if (e === 'darkButton') {
+        lightStyle.disabled = true;
+        darkStyle.disabled = false;
+      }
+    }
+  </script>
+</body>
+
+</html>

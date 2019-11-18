@@ -24,3 +24,23 @@ query {
     email
   }
 }
+
+# atualizar informações de um usuario
+
+mutation {
+  updateUser(id: "obrigatorio", name: "", email: ""){
+    id
+    name
+    email
+  }
+}
+
+# excluir um usuario
+
+mutation {
+  deleteUser(id: "obrigatorio"){
+  	id
+    name
+    email
+  }
+}

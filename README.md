@@ -3,3 +3,6 @@
 
 ### graphql
 `http://localhost:4000`
+
+### outros
+- calculadora
